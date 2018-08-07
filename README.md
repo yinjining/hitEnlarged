@@ -10,5 +10,19 @@
         2、子试图太大，超出父视图范围导致无法响应点击事件问题。
         
 【注】如要超出父视图点击，要先把试图加到view上才能使用扩展属性，否则不生效
+
+Podfile
+To integrate HitEnlarged into your Xcode project using CocoaPods, specify it in your Podfile:
+
+      source 'https://github.com/yinjining/hitEnlarged.git'
+      platform :ios, '8.0'
+
+      target 'TargetName' do
+      pod 'HitEnlarged', '~> 1.0.0'
+      end
+      
+Then, run the following command:
+
+      $ pod install
         
 ![show.jpg](https://upload-images.jianshu.io/upload_images/2953881-49c2926fd74e9f91.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
