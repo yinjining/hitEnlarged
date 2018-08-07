@@ -1,6 +1,6 @@
 Pod::Spec.new do |s| 
 s.name = "HitEnlarged" 
-s.version = "1.0"
+s.version = "1.0.0"
 s.summary = "扩大响应区域" 
 s.description = "扩大响应区域，更方便的适应点击" 
 s.homepage = "https://github.com/yinjining/hitEnlarged" 
