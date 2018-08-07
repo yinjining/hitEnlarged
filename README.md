@@ -9,5 +9,6 @@
 
         2、子试图太大，超出父视图范围导致无法响应点击事件问题。
         
+【注】如要超出父视图点击，要先把试图加到view上才能使用扩展属性，否则不生效
         
 ![show.jpg](https://upload-images.jianshu.io/upload_images/2953881-49c2926fd74e9f91.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
