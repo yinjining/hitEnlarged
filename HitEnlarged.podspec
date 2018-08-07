@@ -8,7 +8,7 @@ s.license = { :type => 'MIT', :file => 'LICENSE' }
 s.author = { 'yinjining' => '921652053@qq.com' } 
 s.ios.deployment_target = '9.0' 
 s.source = { :git => "https://github.com/yinjining/hitEnlarged.git", :tag => "v#{s.version}" } 
-s.source_files = 'HitEnlarged/HitEnlarged/HitEnlarged/*/.{h,m}'
+s.source_files = 'HitEnlarged/HitEnlarged/*/*'
 s.requires_arc = true 
 s.framework = 'UIKit' 
 end
