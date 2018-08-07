@@ -25,30 +25,32 @@
     button.backgroundColor = [UIColor brownColor];
     [self.view addSubview:button];
     
-//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 300, 250, 30)];
-//    label.backgroundColor = [UIColor redColor];
-//    label.font = [UIFont systemFontOfSize:12];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.text = @"我是label，超出我30个点，我还能响应";
-//    label.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
-//    label.userInteractionEnabled = YES;
-//    [self.view addSubview:label];
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(50, 300, 200, 40)];
-    [view setBackgroundColor:[UIColor yellowColor]];
-    [self.view addSubview:view];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 250, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 200, 250, 30)];
     label.backgroundColor = [UIColor redColor];
     label.font = [UIFont systemFontOfSize:12];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"我是label，超出我30个点，我还能响应";
     label.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
     label.userInteractionEnabled = YES;
-    [view addSubview:label];
-    
+    [self.view addSubview:label];
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
     [label addGestureRecognizer:tap1];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(50, 350, 200, 150)];
+    [view setBackgroundColor:[UIColor yellowColor]];
+    [self.view addSubview:view];
+    
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(-20,50, 250, 30)];
+    label2.backgroundColor = [UIColor redColor];
+    label2.font = [UIFont systemFontOfSize:12];
+    label2.textAlignment = NSTextAlignmentCenter;
+    label2.text = @"我是自由的，超出我30个点，我还能响应";
+    label2.userInteractionEnabled = YES;
+    [view addSubview:label2];
+    label2.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
+    
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick2:)];
+    [label2 addGestureRecognizer:tap2];
 }
 
 
@@ -60,6 +62,9 @@
     NSLog(@"我是view，我被点击了");
 }
 
+-(void)tapClick2:(UIGestureRecognizer *)gesture{
+    NSLog(@"我比较吊，超出父视图我还能响应");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

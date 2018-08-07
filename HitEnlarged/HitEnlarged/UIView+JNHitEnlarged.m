@@ -8,7 +8,6 @@
 
 #import "UIView+JNHitEnlarged.h"
 #import <objc/runtime.h>
-#include <objc/message.h>
 
 static char key_yjn_enlarged;
 
@@ -21,26 +20,56 @@ static char key_yjn_enlarged;
 }
 
 -(void)setEnlargeEdge:(UIEdgeInsets)enlargeEdge{
-    objc_setAssociatedObject(self, &key_yjn_enlarged, NSStringFromUIEdgeInsets(enlargeEdge), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    //拓展后的rect
+    CGRect rect=CGRectMake(self.bounds.origin.x-enlargeEdge.left, self.bounds.origin.y-enlargeEdge.top, self.frame.size.width+enlargeEdge.left+enlargeEdge.right, self.frame.size.height+enlargeEdge.top+enlargeEdge.bottom);
+    //存入
+    objc_setAssociatedObject(self, &key_yjn_enlarged, @[NSStringFromCGRect(rect)], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    //挣脱父试图束缚
+    CGRect windowConvertRect = [self convertRect:self.bounds toView:[[[UIApplication sharedApplication] delegate] window]];
+    [self freeView:self.superview rect:windowConvertRect enlargeEdge:enlargeEdge];
 }
 
--(CGRect)enlargedRect{
-    NSString *edgeStr=objc_getAssociatedObject(self, &key_yjn_enlarged);
-    if (edgeStr) {
-        UIEdgeInsets edgeInsets=UIEdgeInsetsFromString(edgeStr);
-        CGRect enlargedrect=CGRectMake(self.bounds.origin.x-edgeInsets.left, self.bounds.origin.y-edgeInsets.top, self.frame.size.width+edgeInsets.left+edgeInsets.right, self.frame.size.height+edgeInsets.top+edgeInsets.bottom);
-        return enlargedrect;
-    }
-    return self.bounds;
-}
-
--(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
-    CGRect rect = [self enlargedRect];
-    if (CGRectContainsPoint(rect, point)) {
-        return YES;
+-(NSArray *)enlargedRect{
+    NSArray *enlargedArr = objc_getAssociatedObject(self, &key_yjn_enlarged);
+    if (enlargedArr) {
+        return enlargedArr;
     }else{
-        return NO;
+        return @[NSStringFromCGRect(self.bounds)];
     }
+}
+#pragma mark - 挣脱父试图束缚
+-(void)freeView:(UIView *)superview rect:(CGRect)rect enlargeEdge:(UIEdgeInsets)enlargeEdge{
+    if(superview == nil) return;
+    
+    //坐标转换
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect selfRect = [self convertRect:self.bounds toView:window];
+    CGRect superViewRect = [superview convertRect:superview.bounds toView:window];
+    
+    if (CGRectContainsRect(superViewRect,selfRect)) {//完全包含
+        return;
+    }else{//不完全包含
+        NSMutableArray *rectArr = [NSMutableArray arrayWithArray:[superview enlargedRect]];
+        CGRect newRect = CGRectMake(rect.origin.x - superViewRect.origin.x, rect.origin.y - superViewRect.origin.y, rect.size.width, rect.size.height);
+        
+        CGRect newEnlargeRect = CGRectMake(newRect.origin.x-enlargeEdge.left, newRect.origin.y-enlargeEdge.top, newRect.size.width+enlargeEdge.left+enlargeEdge.right, newRect.size.height+enlargeEdge.top+enlargeEdge.bottom);
+        
+        [rectArr addObject:NSStringFromCGRect(newEnlargeRect)];
+        objc_setAssociatedObject(superview, &key_yjn_enlarged, rectArr, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+        [self freeView:superview.superview rect:rect enlargeEdge:enlargeEdge];
+    }
+}
+
+#pragma mark - 响应者链
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
+    for (NSString *edgeStr in [self enlargedRect]) {
+        CGRect rect= CGRectFromString(edgeStr);
+        if (CGRectContainsPoint(rect,point)) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
@@ -48,13 +77,12 @@ static char key_yjn_enlarged;
     if (self.userInteractionEnabled == NO || self.hidden == YES ||  self.alpha <= 0.01){
         return nil;
     }
-    
     // 2.判断下点在不在窗口上
     // 不在窗口上
-    if ([self pointInside:point withEvent:event] == NO){        
+    if ([self pointInside:point withEvent:event] == NO){
         return nil;
     }
-    
+
     // 3.从后往前遍历子控件数组
     int count = (int)self.subviews.count;
     for (int i = count - 1; i >= 0; i--)     {
