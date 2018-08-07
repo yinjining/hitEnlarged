@@ -18,7 +18,7 @@
     [super viewDidLoad];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(50, 100, 250, 30);
-    [button setTitle:@"我是button，超出我50个点，我还能响应" forState:UIControlStateNormal];
+    [button setTitle:@"我是button，超出我50个点内，我还能响应" forState:UIControlStateNormal];
     button.enlargedMargin = 50;
     button.titleLabel.font = [UIFont systemFontOfSize:12];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -29,7 +29,7 @@
     label.backgroundColor = [UIColor redColor];
     label.font = [UIFont systemFontOfSize:12];
     label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"我是label，超出我30个点，我还能响应";
+    label.text = @"我是label，超出我30个点内，我还能响应";
     label.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
     label.userInteractionEnabled = YES;
     [self.view addSubview:label];
@@ -44,7 +44,7 @@
     label2.backgroundColor = [UIColor redColor];
     label2.font = [UIFont systemFontOfSize:12];
     label2.textAlignment = NSTextAlignmentCenter;
-    label2.text = @"我是自由的，超出我30个点，我还能响应";
+    label2.text = @"父试图困不住我，超出30个点内，我都能响应";
     label2.userInteractionEnabled = YES;
     [view addSubview:label2];
     label2.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
