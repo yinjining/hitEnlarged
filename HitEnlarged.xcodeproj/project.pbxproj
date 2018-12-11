@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7914548121BF8D2C0006191D /* TestSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7914548021BF8D2C0006191D /* TestSubView.m */; };
 		794D1234211843D800682505 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 794D1233211843D800682505 /* AppDelegate.m */; };
 		794D1237211843D800682505 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 794D1236211843D800682505 /* ViewController.m */; };
 		794D123A211843D800682505 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 794D1238211843D800682505 /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7914547F21BF8D2C0006191D /* TestSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSubView.h; sourceTree = "<group>"; };
+		7914548021BF8D2C0006191D /* TestSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestSubView.m; sourceTree = "<group>"; };
 		794D122F211843D800682505 /* HitEnlarged.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitEnlarged.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		794D1232211843D800682505 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		794D1233211843D800682505 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 				794D1233211843D800682505 /* AppDelegate.m */,
 				794D1235211843D800682505 /* ViewController.h */,
 				794D1236211843D800682505 /* ViewController.m */,
+				7914547F21BF8D2C0006191D /* TestSubView.h */,
+				7914548021BF8D2C0006191D /* TestSubView.m */,
 				794D1238211843D800682505 /* Main.storyboard */,
 				794D123B211843D900682505 /* Assets.xcassets */,
 				794D123D211843D900682505 /* LaunchScreen.storyboard */,
@@ -275,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7914548121BF8D2C0006191D /* TestSubView.m in Sources */,
 				794D1237211843D800682505 /* ViewController.m in Sources */,
 				794D1242211843D900682505 /* main.m in Sources */,
 				794D126C21184E1E00682505 /* UIView+JNHitEnlarged.m in Sources */,

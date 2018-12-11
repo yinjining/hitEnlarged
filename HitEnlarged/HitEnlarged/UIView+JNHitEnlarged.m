@@ -1,11 +1,3 @@
-//
-//  UIView+JNHitEnlarged.m
-//  HitEnlarged
-//
-//  Created by yinjn on 2018/8/6.
-//  Copyright © 2018年 殷继宁. All rights reserved.
-//
-
 #import "UIView+JNHitEnlarged.h"
 #import <objc/runtime.h>
 
@@ -21,12 +13,11 @@ static char key_yjn_enlarged;
 
 -(void)setEnlargeEdge:(UIEdgeInsets)enlargeEdge{
     //拓展后的rect
-    CGRect rect=CGRectMake(self.bounds.origin.x-enlargeEdge.left, self.bounds.origin.y-enlargeEdge.top, self.frame.size.width+enlargeEdge.left+enlargeEdge.right, self.frame.size.height+enlargeEdge.top+enlargeEdge.bottom);
+    CGRect rect=CGRectMake(self.bounds.origin.x-enlargeEdge.left, self.bounds.origin.y-enlargeEdge.top, self.bounds.size.width+enlargeEdge.left+enlargeEdge.right, self.bounds.size.height+enlargeEdge.top+enlargeEdge.bottom);
     //存入
     objc_setAssociatedObject(self, &key_yjn_enlarged, @[NSStringFromCGRect(rect)], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     //挣脱父试图束缚
-    CGRect windowConvertRect = [self convertRect:self.bounds toView:[[[UIApplication sharedApplication] delegate] window]];
-    [self freeView:self.superview rect:windowConvertRect enlargeEdge:enlargeEdge];
+    [self freeView:self.superview enlargeEdge:enlargeEdge];
 }
 
 -(NSArray *)enlargedRect{
@@ -38,26 +29,29 @@ static char key_yjn_enlarged;
     }
 }
 #pragma mark - 挣脱父试图束缚
--(void)freeView:(UIView *)superview rect:(CGRect)rect enlargeEdge:(UIEdgeInsets)enlargeEdge{
+-(void)freeView:(UIView *)superview  enlargeEdge:(UIEdgeInsets)enlargeEdge{
     if(superview == nil) return;
     
+    CGRect selfEnlargeBounds = CGRectMake(self.bounds.origin.x-enlargeEdge.left, self.bounds.origin.y-enlargeEdge.top, self.bounds.size.width+enlargeEdge.left+enlargeEdge.right, self.bounds.size.height+enlargeEdge.top+enlargeEdge.bottom);
+
     //坐标转换
     UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect selfRect = [self convertRect:self.bounds toView:window];
+    CGRect selfRect = [self convertRect:selfEnlargeBounds toView:window];
     CGRect superViewRect = [superview convertRect:superview.bounds toView:window];
     
     if (CGRectContainsRect(superViewRect,selfRect)) {//完全包含
         return;
     }else{//不完全包含
         NSMutableArray *rectArr = [NSMutableArray arrayWithArray:[superview enlargedRect]];
-        CGRect newRect = CGRectMake(rect.origin.x - superViewRect.origin.x, rect.origin.y - superViewRect.origin.y, rect.size.width, rect.size.height);
+        
+        CGRect newRect = CGRectMake(selfRect.origin.x - superViewRect.origin.x, selfRect.origin.y - superViewRect.origin.y, selfRect.size.width, selfRect.size.height);
         
         CGRect newEnlargeRect = CGRectMake(newRect.origin.x-enlargeEdge.left, newRect.origin.y-enlargeEdge.top, newRect.size.width+enlargeEdge.left+enlargeEdge.right, newRect.size.height+enlargeEdge.top+enlargeEdge.bottom);
         
         [rectArr addObject:NSStringFromCGRect(newEnlargeRect)];
+        
         objc_setAssociatedObject(superview, &key_yjn_enlarged, rectArr, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
-        [self freeView:superview.superview rect:rect enlargeEdge:enlargeEdge];
+        [self freeView:superview.superview enlargeEdge:enlargeEdge];
     }
 }
 
@@ -82,7 +76,7 @@ static char key_yjn_enlarged;
     if ([self pointInside:point withEvent:event] == NO){
         return nil;
     }
-
+    
     // 3.从后往前遍历子控件数组
     int count = (int)self.subviews.count;
     for (int i = count - 1; i >= 0; i--)     {
@@ -101,6 +95,3 @@ static char key_yjn_enlarged;
     return self;
 }
 @end
-
-
-

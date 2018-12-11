@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIView+JNHitEnlarged.h"
+#import "TestSubView.h"
 @interface ViewController ()
 
 @end
@@ -16,25 +17,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(50, 100, 250, 30);
-    [button setTitle:@"我是button，超出我50个点内，我还能响应" forState:UIControlStateNormal];
-    button.enlargedMargin = 50;
-    button.titleLabel.font = [UIFont systemFontOfSize:12];
-    [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor brownColor];
-    [self.view addSubview:button];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 200, 250, 30)];
-    label.backgroundColor = [UIColor redColor];
-    label.font = [UIFont systemFontOfSize:12];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"我是label，超出我30个点内，我还能响应";
-    label.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
-    label.userInteractionEnabled = YES;
-    [self.view addSubview:label];
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
-    [label addGestureRecognizer:tap1];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    button.frame = CGRectMake(50, 100, 250, 30);
+//    [button setTitle:@"我是button，超出我50个点内，我还能响应" forState:UIControlStateNormal];
+//    button.enlargedMargin = 50;
+//    button.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    button.backgroundColor = [UIColor brownColor];
+//    [self.view addSubview:button];
+//    
+//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 200, 250, 30)];
+//    label.backgroundColor = [UIColor redColor];
+//    label.font = [UIFont systemFontOfSize:12];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.text = @"我是label，超出我30个点内，我还能响应";
+//    label.enlargeEdge = UIEdgeInsetsMake(30, 30, 30, 30);
+//    label.userInteractionEnabled = YES;
+//    [self.view addSubview:label];
+//    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
+//    [label addGestureRecognizer:tap1];
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(50, 350, 200, 150)];
     [view setBackgroundColor:[UIColor yellowColor]];
@@ -51,6 +52,12 @@
     
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick2:)];
     [label2 addGestureRecognizer:tap2];
+    
+//    TestSubView *viewSub = [[TestSubView alloc]initWithFrame:CGRectMake(50, 550, 200, 150)];
+//    [viewSub setBackgroundColor:[UIColor blueColor]];
+//    [self.view addSubview:viewSub];
+//    UITapGestureRecognizer *tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick3:)];
+//    [viewSub addGestureRecognizer:tap3];
 }
 
 
@@ -59,11 +66,15 @@
 }
 
 -(void)tapClick:(UIGestureRecognizer *)gesture{
-    NSLog(@"我是view，我被点击了");
+    NSLog(@"我是label，我被点击了");
 }
 
 -(void)tapClick2:(UIGestureRecognizer *)gesture{
     NSLog(@"我比较吊，超出父视图我还能响应");
+}
+
+-(void)tapClick3:(UIGestureRecognizer *)gesture{
+    NSLog(@"看一下不引用头文件，category对我的影响");
 }
 
 - (void)didReceiveMemoryWarning {
